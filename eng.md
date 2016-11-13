@@ -237,12 +237,11 @@ maximum-width of 1140px, which means each column is 380px
     
 
 So far so good. We’ve made a grid that works great at a viewport larger than
-1140px. Unfortunately, it breaks when the viewport is smaller than 1140px.<
-figure
->
+1140px. Unfortunately, it breaks when the viewport is smaller than 1140px.
+<figure>
 
-![Grid breaks below 1140px][11]<figcaption>Grid breaks below 1140px</figcaption
-></figure>
+![Grid breaks below 1140px][11]<figcaption>Grid breaks below 1140px</figcaption>
+</figure>
 This means we can’t use pixels as the unit for our columns. We need a unit
 knows what
 
