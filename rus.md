@@ -142,9 +142,7 @@ CSS Grid на сегодняшний день является лучшим ин
 (вы увидите это позже).
 
 Вот изображение, которое резюмирует как `width` вычисляется в зависимости от значений
-`box-sizing`
-
-<figure>
+`box-sizing`<figure>
 
 ![Свойство Box-sizing и как оно влияет на расчет ширины][6]<figcaption>
 Свойство Box-sizing и как оно влияет на расчет ширины</figcaption></figure>
@@ -193,13 +191,7 @@ CSS Grid на сегодняшний день является лучшим ин
 
 Если вы помните, HTML для «сеточныех CSS систем» выглядит примерно так:
     
-    <<p class="hljs-keyword">div</p> <p class="hljs-built_in">class</p>=<p class="hljs-string">"l-wrap"</p>>
-      <<p class="hljs-keyword">div</p> <p class="hljs-built_in">class</p>=<p class="hljs-string">"three-col-grid"</p>>
-        <<p class="hljs-keyword">div</p> <p class="hljs-built_in">class</p>=<p class="hljs-string">"grid-item"</p>>Grid <p class="hljs-built_in">item</p></<p class="hljs-keyword">div</p>>
-        <<p class="hljs-keyword">div</p> <p class="hljs-built_in">class</p>=<p class="hljs-string">"grid-item"</p>>Grid <p class="hljs-built_in">item</p></<p class="hljs-keyword">div</p>>
-        <<p class="hljs-keyword">div</p> <p class="hljs-built_in">class</p>=<p class="hljs-string">"grid-item"</p>>Grid <p class="hljs-built_in">item</p></<p class="hljs-keyword">div</p>>
-      </<p class="hljs-keyword">div</p>>
-    </<p class="hljs-keyword">div</p>>
+    asf
     
 
 Мы знаем, что для этого HTML сетка имеет всего три колонки в строке. Мы также
@@ -211,14 +203,7 @@ CSS Grid на сегодняшний день является лучшим ин
 Это становится сложнее, если мы думает о колонках и канавках одновременно, так что
 давайте предположим, что сперва мы создаем сетку без канавок.
 
-На выходе такая сетка будет похожа на что-то типа того:
-
-<figure>
-
-![One-sided gutters using margins][16]<figcaption>One-sided gutters using
-margins</figcaption></figure>
-
-<figure>
+На выходе такая сетка будет похожа на что-то типа того:<figure>
 
 ![Трех-колоночная сетка без канавок][10]<figcaption>Трех-колоночная 
 сетка без канавок</figcaption></figure>
@@ -234,9 +219,7 @@ margins</figcaption></figure>
     
 
 Пока все хорошо. Мы сделали сетку, которая работает отлично на вьюпортах больше
-чем 1140px. К сожалению, все ломается, когда вьюпорт меньше чем 1140px.
-
-<figure>
+чем 1140px. К сожалению, все ломается, когда вьюпорт меньше чем 1140px.<figure>
 
 ![Сетка ломается ниже 1140px][11]<figcaption>Сетка ломается ниже 
 1140px</figcaption></figure>
@@ -253,9 +236,7 @@ margins</figcaption></figure>
     
 То, что вы получите из приведенного выше кода - это простая трех-колоночная
 сетка без каких-либо канавок. Когда браузер меняет размер, эти три колонки
-сменят размер пропорционально.
-
-<figure>
+сменят размер пропорционально.<figure>
 
 ![Три колонки без канавок][12]<figcaption>Три колонки без 
 канавок</figcaption></figure>
@@ -263,9 +244,7 @@ margins</figcaption></figure>
 Еще одна вещь перед тем, как мы двинемся дальше. Всякий раз, когда все дочерние
 элементы обтекаемы в контейнере, высота контейнера схлопывается. Этот 
 феномен называется [схлопывание флоата][13]. Это как если бы в 
-контейнере не было бы никаких дочерних элементов:
-
-<figure>
+контейнере не было бы никаких дочерних элементов:<figure>
 
 ![Схлопывание флоата. Изображение с CSS Tricks][14]<figcaption>Схлопывание 
 флоата (изображение с CSS Tricks)</figcaption></figure>
@@ -374,7 +353,8 @@ rightmost grid item. Here’s how you can do it:
 Most of the time, when you remove the final gutter on the rightmost item, you
 also want to float it to the right to prevent subpixel rounding errors from 
 messing up your grid by sending the last item into the next row. This only 
-happens on browsers that round subpixels up.<figure>
+happens on browsers that round subpixels up.<
+e>
 
 
 ![Subpixel rounding errors might break the grid by pushing the final item to the next row][17]
@@ -424,7 +404,8 @@ again.
     }
     
 
-Then, you can recalculate your column-width according to this image:<figure>
+Then, you can recalculate your column-width according to this image:<
+e>
 
 ![One-sided gutters using padding][22]<figcaption>One-sided gutters using
 padding</figcaption></figure>
