@@ -35,7 +35,7 @@ web-сайтов, т.к. у них не хватает знаний и увер�
 ширину ваших колонок и отступов. Я также написал свои соображения об этом в [этой статье][2],
 так что прочтите ее, если вы сомневаетесь.
 
-**В-третьих, вы хотите классы сетки в вашем HTML?**
+**В-третьих, вам нравится писать классы сетки в вашем HTML?**
 
 Когда дело доходит до (типографских) сеток, мир фронтенда делится на две фракции.
 
@@ -179,7 +179,7 @@ web-сайтов, т.к. у них не хватает знаний и увер�
     }
 
 Примечание: я настоятельно рекомендую использовать относительные единицы типа
-`em` или `rem` заместо пикселов для доступности и отзывчивости. В этой стаье
+`em` или `rem` заместо пикселов для доступности и отзывчивости. В этой статье
 я пишу все в пикселах, потому что они проще для понимания.
 
 
@@ -221,7 +221,7 @@ web-сайтов, т.к. у них не хватает знаний и увер�
 ![Трех-колоночная сетка без отступов][10]<figcaption>Трех-колоночная 
 сетка без отступов</figcaption></figure>
 
-Это тот момент, в который мы должны сделать немного математических вычислений.
+Это тот момент, в котором мы должны сделать немного математических вычислений.
 Мы знаем, что сетка имеет максимальную ширину в 1140px, а это означает, что
 каждая колонка будет 380px (`1140 ÷ 3`).
 
@@ -234,8 +234,8 @@ web-сайтов, т.к. у них не хватает знаний и увер�
 Пока все хорошо. Мы сделали сетку, которая работает отлично на вьюпортах больше
 чем 1140px. К сожалению, все ломается, когда вьюпорт меньше, чем 1140px.<figure>
 
-![Сетка ломается меньше 1140px][11]<figcaption>Сетка ломается меньше 
-1140px</figcaption></figure>
+![Сетка ломается, когда вьюпорт меньше 1140px][11]<figcaption>Сетка ломается, 
+когда вьюпорт меньше 1140px</figcaption></figure>
 
 Это занчит, что мы не можем использовать пикселы в наших расчетах. Нам нужна 
 единица, которая перестроится в соответствии с шириной контейнера. Лишь одна
@@ -254,7 +254,7 @@ web-сайтов, т.к. у них не хватает знаний и увер�
 отступов</figcaption></figure>
 
 Еще кое-что, перед тем как мы двинемся дальше. Всякий раз, когда все дочерние
-элементы имеют обтекание в контейнере, высота контейнера схлопывается. Этот 
+элементы в контейнере имеют обтекание, высота контейнера схлопывается. Этот 
 феномен называется [схлопывание флоата][13]. Это как если бы в 
 контейнере не было бы никаких дочерних элементов:<figure>
 
@@ -292,229 +292,235 @@ web-сайтов, т.к. у них не хватает знаний и увер�
 
 ## Шаг 5: Определите расположение отступов {#step-5-determine-gutter-position}
 
-So far, we know we should create gutters either with `margin` or `padding`
-properties. But which should we use?
+Итак, мы знаем, что должны создать отступы либо со свойством `margin`, либо 
+со свойством `padding`. Но что мы должны использовать?
 
-If you sketch around for a bit, you’ll quickly notice that you have four
-possible ways to create these gutters.
+Сделав несколько набросков, вы быстро поймете, что у вас есть четыре возможных
+способа как сделать эти отступы.
 
-1.  Gutters can be placed on *one side*, as *margins* 
-2.  Gutters can be placed on *one side*, as *paddings* 
-3.  Gutters can be split equally on *both sides*, as *margins* 
-4.  Gutters can be split equally on *both sides*, as *paddings* <figure>
+1.  Отступы могут быть расположены *с одной стороны*, в виде *внешних отступов* 
+2.  Отступы могут быть расположены *с одной стороны*, в виде *внутренних отступов* 
+3.  Отступы могут быть расположены равномерно *с обоих сторон*, 
+в виде *внешних отступов* 
+4.  Отступы могут быть расположены равномерно *с обоих сторон*,
+в виде *внутренних отступов*<figure>
 
-![4 possible ways to create columns and gutters][15]<figcaption>4 possible ways
-to create columns and gutters</figcaption></figure>
-This is where it starts to get complicated. You need to calculate column widths
-differently depending on which method you use.
+![4 возможных способа создать колонки и отступы][15]<figcaption>4 возможных способа 
+создать колонки и отступы</figcaption></figure>
+Здесь начинаются сложности. Вам нужно расчитать ширину колонок по-разному,
+в зависимости от метода, который вы используете.
 
-We’ll go through these methods one by one and look at the differences. Take
-your time as you read through them.
+Мы рассмотрим эти методы один за другим и посмотрим на разницу. Не торопитесь, пока
+вы читаете о них.
 
-Here we go:
+Поехали:
 
-With this method, you create gutters with the `margin` property. This gutter
-will either be placed on the left or right of the columns; it’s up to you which 
-side to choose.
+## Метод 1: Односторонние оступы (внешние)
 
-For the purpose of this article, let’s say you chose to put your gutters on
-the right. What you’ll do then is:
+Используя этот метод, вы делаете оступы при помощи свойства `margin`. Этот
+отступ будет расположен слева или справа от колонки. Вам решать какую 
+сторону выбрать.
 
-    <p class="hljs-selector-class">.grid-item</p> {
-      ;
-      <p class="hljs-attribute">margin-right</p>: <p class="hljs-number">20px</p>;
-      <p class="hljs-attribute">float</p>: left;
+В целях этой статьи, давайте предположим, что вы задаете свои отступы справа. 
+Вот что вы будете делать:
+
+    .grid-item {
+      /* Need to recalculate width property */;
+      margin-right: 20px;
+      float: left;
     }
     
 
-Then, you recalculate your column-width according to this image:<figure>
+Затем, вы пересчитываете ширину колонки как на этой картинке:<figure>
 
-![One-sided gutters using margins][16]<figcaption>One-sided gutters using
-margins</figcaption></figure>
-You can see from the image above that *1140px* is equal to *three columns* and*
-two gutters*.
+![Односторонние отступы с использованием внешних отступов][16]<figcaption>Односторонние 
+отступы с использование внешних отступов</figcaption></figure>
+Как вы видите на картинке выше, *1440px* равняются *трем колонкам* и *двум отступам*.
 
-And we have a problem here… We need columns to be written in percentages, but
-our gutters are fixed at 20px. We can’t do math with two different units at once!
+И у нас тут есть проблема... Нам нужно, что бы колонки были написаны в процентах,
+но наши отступы зафиксированы с шириной 20px. Мы не можем делать вычисления с
+двумя разными единицами измерения одновременно!
 
-Well, it wasn’t possible before, but it is now.
+Ну, это было невозможно раньше, но возможно сейчас.
 
-You can use the CSS `calc` function to mix percentages with other units. It
-retrieves the unit values of the percentages to perform calculations on the fly.
+Вы можете использовать CSS-функцию `calc` для сочетания процентов с другими 
+единицами. Она извлекает значение процентов для вычислений на лету.
 
-What this means is you can leave your width as a function, and browsers will
-automatically calculate your values for you:
+Это значит, что вы можете задать ширину в виде функции, и браузер автоматически
+расчитает ее значение для вас
 
-    <p class="hljs-selector-class">.grid-item</p> {
-      <p class="hljs-attribute">width</p>: <p class="hljs-built_in">calc</p>((100% - 20px * 2) / );
-      
+    .grid-item {
+      width: calc((100% - 20px * 2) / 3);
+      /* other properties */
     }
     
 
-That’s great.
+Это отлично.
 
-After getting the column width, you need to remove the final gutter from the
-rightmost grid item. Here’s how you can do it:
+После получения ширины колонки, вам нужно удалить последний отступ у крайнего 
+правого элемента сетки. Вот как вы можете сделать это:
 
-    <p class="hljs-selector-class">.grid-item</p>
-    <p class="hljs-selector-pseudo">:last-child</p> {
-      <p class="hljs-attribute">margin-right</p>: ;
+    .grid-item:last-child {
+      margin-right: 0;
+    }
+    
+Чаше всего, когда вы удаляете последний отступ у крайнего правого элемента, вы
+также хотите задать ему обтекание по правой стороне для предотвращения ошибок
+субпикселного округления, из-за которых ваша сетка переносит последний элемент 
+на новую строку. Это происходит только в браузерах, которые округляют пикселы
+в большую сторону.<figure>
+
+![Ошибка субпикселного округления может сломать сетку, вытолкнув последний элемент на следующуюю строку][17]<figcaption>
+Ошибка субпикселного округления может сломать сетку, вытолкнув 
+последний элемент на следующуюю строку</figcaption></figure>
+    
+    .grid-item:last-child {
+      margin-right: 0;
+      float: right;
+    }
+
+Фух. Почти готово. Еще одна вещь.
+
+Наш код хорош в том случае, если сетка содержит только одну строку.  
+Однако, он не обрезает их, если строк с элементами больше чем одна<figure>
+
+![Наш код лажает, если строк больше чем одна][18]<figcaption>Наш код лажает,
+если строк больше чем одна</figcaption></figure>
+Нам нужно удалть правый внешний отступ у каждого крайнего правого
+элемента в каждой строке. Лучше способо сделать это - использовать `nth-child()`:
+
+    
+    /* For a 3-column grid */
+    .grid-item:nth-child(3n+3) {
+      margin-right: 0;
+      float: right;
     }
     
 
-Most of the time, when you remove the final gutter on the rightmost item, you
-also want to float it to the right to prevent subpixel rounding errors from 
-messing up your grid by sending the last item into the next row. This only 
-happens on browsers that round subpixels up.<
-e>
-
-
-![Subpixel rounding errors might break the grid by pushing the final item to the next row][17]
-    <p class="hljs-selector-class">.grid-item</p>
-    <p class="hljs-selector-pseudo">:last-child</p> {
-      <p class="hljs-attribute">margin-right</p>: ;
-      <p class="hljs-attribute">float</p>: right;
-    }
-    
-
-Phew. Almost there. Just one more thing.
-
-The code so far is great if our grid contains only a single row. It doesn’t
-cut it, however, if there’s more than one row of items
-😢.<figure>
-
-![Our code fails if there's more than one row][18]<figcaption>Our code fails if
-there’s more than one row</figcaption></figure>
-What we need to do is to remove the right margin from the rightmost item in
-every row. The best way to do this is with`nth-child()`:
-
-    
-    <p class="hljs-selector-class">.grid-item</p>
-    <p class="hljs-selector-pseudo">:nth-child(3n+3)</p> {
-      <p class="hljs-attribute">margin-right</p>: ;
-      <p class="hljs-attribute">float</p>: right;
-    }
-    
-
-That’s all you need for a one-sided gutter built with margins. Here’s a
-codepen for you to play around with.
+Это все, что вам нужно для создания односторонних внешних отступов.
+Вот codepen, что бы вы могли поиграться с этим.
 
 See the Pen [Single sided grid with gutters as margins][19] by Zell Liew (
 [@zellwk][20]) on [CodePen][21].
 
-Note: Calc doesn’t work with IE8 and Opera mini. You might want to consider
-other methods if you need to support these two browsers.
+Примечание: Свойство Calc не работает в IE8 и Opera mini. Вы можете посмотреть
+другие методы, если вам нужно поддерживать эти два браузера.
 
-Like the one-sided gutters with margins, this method requires you to place your
-gutters to one side of your columns as well. Let’s say you choose the right side
-again.
+## Метод 2: Односторонние оступы (внутренние)
 
-    <p class="hljs-selector-class">.grid-item</p> {
-      
-      <p class="hljs-attribute">padding-right</p>: <p class="hljs-number">20px</p>;
-      <p class="hljs-attribute">float</p>: left;
+Как и односторонние внешние отступы, в этот методе требуется разместить ваши
+отступы на одной из сторон ваших колонок. Предположим, что вы снова выбрали правую
+сторону.
+
+    .grid-item {
+      /* width property */
+      padding-right: 20px;
+      float: left;
+    }
+    
+Затем, вы можете пересчитать ширину колонки как на этой 
+картинке:<figure>
+
+![Односторонние отступы с использованием внутренних отступов][22]<figcaption>Односторонние 
+отступы с использованием внутренних отступов</figcaption></figure>
+
+Обратили внимание, что ширина отлчиается от предыдущего метода?
+Она отличается, потому что мы переключили свойство `box-sizing` в `border-box`.
+Теперь, `width` расчитывается, включая в себя `padding`.
+
+В этом случае, две их трех колонок имеют бОльшую ширину, чем последняя, что
+в конечном итоге приводит к причудливым расчетам и делает CSS код трудным для понимания.
+
+Я предлагаю даже не пробовать с этим методом. (???Оно??? станет действительно уродливым, если
+вы продолжите с ним. Пробуйте на свой страх и риск.) 
+
+## Метод 3: Разделенные отступы (внешние) {#method-3-split-gutters-margin-}
+
+В этом методе, вы разделяете отступы на две части и размещяете по половине с 
+каждой стороны ваших колонок. Код выглядит примерно так:
+
+
+    .grid-item {
+      /* Width property */
+      margin-right: 10px;
+      margin-left: 10px;
+      float: left;
     }
     
 
-Then, you can recalculate your column-width according to this image:<
-e>
+Затем, вы пересчитываете ширину колонки как на этой картинке:<figure>
 
-![One-sided gutters using padding][22]<figcaption>One-sided gutters using
-padding</figcaption></figure>
-Notice the widths are different from the previous method? They’re different
-because we switched the`box-sizing` property to `border-box`. Now, `width`
-calculations include`padding` in them.
+![Разделение внешних отступов][23]<figcaption>
+Разделение внешних отступов</figcaption></figure>
 
-In this case, two of the three columns have a larger width than the final one,
-which eventually results in weird calculations and CSS code that’s hard to grasp.
+Как мы узнали ранее, вам нужно расчитать ширину колонки с помощью 
+функции `calc()`. В этой ситуации, вы отнимаете три отступа от 100%,
+прежде чем делить ответ на три для получения ширины колонки. Другими словами,
+ширина колонки будет `calc((100% - 20px * 3) / 3)`.
 
-I suggest not even attempting this method. (It’s going to be really ugly if
-you continue with it. Try it at your own risk!
-)
-
-## Method 3: Split gutters (Margin) {#method-3-split-gutters-margin-}
-
-In this method, you split gutters into two and place each half on the sides of
-your columns. The code looks like this:
-
-    <p class="hljs-selector-class">.grid-item</p> {
-      
-      <p class="hljs-attribute">margin-right</p>: <p class="hljs-number">10px</p>;
-      <p class="hljs-attribute">margin-left</p>: <p class="hljs-number">10px</p>;
-      <p class="hljs-attribute">float</p>: left;
+    .grid-item {
+      width: calc((100% - 20px * 3) / 3);
+      margin-right: 10px;
+      margin-left: 10px;
+      float: left;
     }
     
 
-Then, you calculate your column-width according to this image:<figure>
-
-![Split gutters with margin][23]<figcaption>Split gutters with margin</
-figcaption
-></figure>
-From what we know before, you need to calculate the column-width with the 
-`calc()` function. In this case, you remove three gutters from 100% before
-dividing the answer by three to get your column-width. In other words, the 
-column-width is`calc((100% - 20px * 3) / 3)`.
-
-    <p class="hljs-selector-class">.grid-item</p> {
-      <p class="hljs-attribute">width</p>: <p class="hljs-built_in">calc</p>((100% - 20px * 3) / );
-      <p class="hljs-attribute">margin-right</p>: <p class="hljs-number">10px</p>;
-      <p class="hljs-attribute">margin-left</p>: <p class="hljs-number">10px</p>;
-      <p class="hljs-attribute">float</p>: left;
-    }
-    
-
-That’s it! (Nothing extra you need to do for grids with multiple rows 😉).
-Here’s a codepen for you to play with:
+Это все! (Вам не нужно ничего дополнительно делать для сеток с несколькими строками).
+Вот codepen, что бы вы могли поиграться с этим:
 
 See the Pen [grid with split gutters as margins][24] by Zell Liew (
 [@zellwk][20]) on [CodePen][21].
 
-## Method 4: Split gutters (Padding) {#method-4-split-gutters-padding-}
+## Метод 4: Разделенные оступы (внутренние) {#method-4-split-gutters-padding-}
 
-This method is similar to the previous one. You split your gutters and place
-each half on the sides of your columns as well. This time, you use padding 
-instead of gutters.
+Этот метод аналогичен предыдущему. Вы делиле ваши отступы и размещаете их с каждой 
+стороны ваших колонок. На этот раз, вы используете внутренние отступы:
 
-    <p class="hljs-selector-class">.grid-item</p> {
-      
-      <p class="hljs-attribute">padding-right</p>: <p class="hljs-number">10px</p>;
-      <p class="hljs-attribute">padding-left</p>: <p class="hljs-number">10px</p>;
-      <p class="hljs-attribute">float</p>: left;
+    .grid-item {
+      /* width property */
+      padding-right: 10px;
+      padding-left: 10px;
+      float: left;
     }
     
 
-Then, you calculate your column widths as follows:<figure>
+Затем, вы расчитываете ширину вашей колонки так:<figure>
 
-![Split gutters with padding][25]<figcaption>Split gutters with padding</
-figcaption
-></figure>
-Notice the column-widths are much easier to calculate this time? That’s right
-; it’s a third of the grid width at every breakpoint.
+![Разделенные внутренние отступы][25]<figcaption>Разделенные внутренние 
+отступы</figcaption></figure>
+Обратили внимание, что в этот раз гораздо легче делать расчеты?
+Все верно; это треть ширины сетки в каждой контрольной точке.
 
-    <p class="hljs-selector-class">.grid-item</p> {
-      <p class="hljs-attribute">width</p>: <p class="hljs-number">33.3333%</p>;
-      <p class="hljs-attribute">padding-right</p>: <p class="hljs-number">10px</p>;
-      <p class="hljs-attribute">padding-left</p>: <p class="hljs-number">10px</p>;
-      <p class="hljs-attribute">float</p>: left;
+    .grid-item {
+      width: 33.3333%;
+      padding-right: 10px;
+      padding-left: 10px;
+      float: left;
     }
     
 
-Here’s a codepen for you to play with:
+Вот codepen, что бы вы могли поиграться с этим:
 
 See the Pen [grid with split gutters as padding][26] by Zell Liew (
 [@zellwk][20]) on [CodePen][21].
 
-Before we move on, I want to tell you about a small caveat if you use split
-gutter with padding. If you take a look at the markup in the Codepen, you’ll 
-notice that I added an extra`<div>` within `.grid-item`. This extra 
-`<div>` is required if your component contains background or borders.
+Прежде чем мы двинемся дальше, я хочу рассказать вам о небольшом предостережении,
+если вы используете разделенные внутренние отступы. Если вы взгляните на разметку в
+Codepen, то вы увидите, что я добавил дополнительный `<div>` внутри `.grid-item`. 
+Этот дополнительный `<div>` важен, если ваш компонент содержит фон или границы.
 
-This is because background is shown on padding properties. This image should
-explain why (hopefully), by showing the relationship between`background` and
-other properties.<figure>
+Это потому что фон отображатеся на внутренних границах. Эта картинка должна
+объяснить почему (я надеюсь), показав связь между `background` и другими 
+свойствами.<figure>
 
-![Background is shown on the padding property][27]<figcaption>Background is
-shown on the padding property</figcaption></figure>
+![Фон отображатеся на внутренних границах][27]<figcaption>Фон отображатеся 
+на внутренних границах</figcaption></figure>
+
+
+
+
+
 ### What would I use? {#what-would-i-use-}
 
 When I started to code grids about two years ago, I mostly coded grids that are
