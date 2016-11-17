@@ -107,8 +107,8 @@ web-сайтов, т.к. у них не хватает знаний и увер�
 4.  Расчитайте ширину колонок
 5.  Определите расположение отступов
 6.  Создайте сетку для отладки
-7.  Внесите изменения в разметку
-8.  Сделайте вашу разметку адаптивной
+7.  Внесите изменения в раскладку
+8.  Сделайте вашу раскладку адаптивной
 
 Большинство из этих шагов становятся достаточно простыми, как только
 вы сделаете их хотя бы раз. Я обстоятельно объясню все, что вам нужно знать, пока
@@ -307,6 +307,7 @@ web-сайтов, т.к. у них не хватает знаний и увер�
 
 ![4 возможных способа создать колонки и отступы][15]<figcaption>4 возможных способа 
 создать колонки и отступы</figcaption></figure>
+
 Здесь начинаются сложности. Вам нужно расчитать ширину колонок по-разному,
 в зависимости от метода, который вы используете.
 
@@ -315,9 +316,9 @@ web-сайтов, т.к. у них не хватает знаний и увер�
 
 Поехали:
 
-## Метод 1: Односторонние оступы (внешние)
+### Метод 1: Односторонние оступы (внешние)
 
-Используя этот метод, вы делаете оступы при помощи свойства `margin`. Этот
+Используя этот метод, вы создаете оступы при помощи свойства `margin`. Этот
 отступ будет расположен слева или справа от колонки. Вам решать какую 
 сторону выбрать.
 
@@ -337,17 +338,17 @@ web-сайтов, т.к. у них не хватает знаний и увер�
 отступы с использование внешних отступов</figcaption></figure>
 Как вы видите на картинке выше, *1440px* равняются *трем колонкам* и *двум отступам*.
 
-И у нас тут есть проблема... Нам нужно, что бы колонки были написаны в процентах,
-но наши отступы зафиксированы с шириной 20px. Мы не можем делать вычисления с
+И тут у нас появилась проблема... Нам нужно, что бы колонки были описаны в процентах,
+но в тоже время наши отступы зафиксированы на ширине 20px. Мы не можем делать вычисления с
 двумя разными единицами измерения одновременно!
 
 Ну, это было невозможно раньше, но возможно сейчас.
 
 Вы можете использовать CSS-функцию `calc` для сочетания процентов с другими 
-единицами. Она извлекает значение процентов для вычислений на лету.
+единицами. Она на лету извлекает значение процентов для вычислений.
 
 Это значит, что вы можете задать ширину в виде функции, и браузер автоматически
-расчитает ее значение для вас
+расчитает для вас ее значение:
 
     .grid-item {
       width: calc((100% - 20px * 2) / 3);
@@ -381,11 +382,12 @@ web-сайтов, т.к. у них не хватает знаний и увер�
 
 Фух. Почти готово. Еще одна вещь.
 
-Наш код хорош в том случае, если сетка содержит только одну строку.  
+Наш код хорош только в том случае, если сетка содержит только одну строку.  
 Однако, он не обрезает их, если строк с элементами больше чем одна<figure>
 
 ![Наш код лажает, если строк больше чем одна][18]<figcaption>Наш код лажает,
 если строк больше чем одна</figcaption></figure>
+
 Нам нужно удалть правый внешний отступ у каждого крайнего правого
 элемента в каждой строке. Лучше способо сделать это - использовать `nth-child()`:
 
@@ -400,13 +402,13 @@ web-сайтов, т.к. у них не хватает знаний и увер�
 Это все, что вам нужно для создания односторонних внешних отступов.
 Вот codepen, что бы вы могли поиграться с этим.
 
-See the Pen [Single sided grid with gutters as margins][19] by Zell Liew (
-[@zellwk][20]) on [CodePen][21].
+See the Pen [Single sided grid with gutters as margins][19] by Zell Liew 
+([@zellwk][20]) on [CodePen][21].
 
 Примечание: Свойство Calc не работает в IE8 и Opera mini. Вы можете посмотреть
 другие методы, если вам нужно поддерживать эти два браузера.
 
-## Метод 2: Односторонние оступы (внутренние)
+### Метод 2: Односторонние оступы (внутренние)
 
 Как и односторонние внешние отступы, в этот методе требуется разместить ваши
 отступы на одной из сторон ваших колонок. Предположим, что вы снова выбрали правую
@@ -428,13 +430,13 @@ See the Pen [Single sided grid with gutters as margins][19] by Zell Liew (
 Она отличается, потому что мы переключили свойство `box-sizing` в `border-box`.
 Теперь, `width` расчитывается, включая в себя `padding`.
 
-В этом случае, две их трех колонок имеют бОльшую ширину, чем последняя, что
+В этом случае, две из трех колонок имеют бОльшую ширину, чем последняя, что
 в конечном итоге приводит к причудливым расчетам и делает CSS код трудным для понимания.
 
-Я предлагаю даже не пробовать с этим методом. (???Оно??? станет действительно уродливым, если
+Я предлагаю даже не пробовать этот методом. (???Оно??? станет действительно уродливым, если
 вы продолжите с ним. Пробуйте на свой страх и риск.) 
 
-## Метод 3: Разделенные отступы (внешние) {#method-3-split-gutters-margin-}
+### Метод 3: Разделенные отступы (внешние) {#method-3-split-gutters-margin-}
 
 В этом методе, вы разделяете отступы на две части и размещяете по половине с 
 каждой стороны ваших колонок. Код выглядит примерно так:
@@ -472,7 +474,7 @@ See the Pen [Single sided grid with gutters as margins][19] by Zell Liew (
 See the Pen [grid with split gutters as margins][24] by Zell Liew (
 [@zellwk][20]) on [CodePen][21].
 
-## Метод 4: Разделенные оступы (внутренние) {#method-4-split-gutters-padding-}
+### Метод 4: Разделенные оступы (внутренние) {#method-4-split-gutters-padding-}
 
 Этот метод аналогичен предыдущему. Вы делиле ваши отступы и размещаете их с каждой 
 стороны ваших колонок. На этот раз, вы используете внутренние отступы:
@@ -489,6 +491,7 @@ See the Pen [grid with split gutters as margins][24] by Zell Liew (
 
 ![Разделенные внутренние отступы][25]<figcaption>Разделенные внутренние 
 отступы</figcaption></figure>
+
 Обратили внимание, что в этот раз гораздо легче делать расчеты?
 Все верно; это треть ширины сетки в каждой контрольной точке.
 
@@ -505,7 +508,7 @@ See the Pen [grid with split gutters as margins][24] by Zell Liew (
 See the Pen [grid with split gutters as padding][26] by Zell Liew (
 [@zellwk][20]) on [CodePen][21].
 
-Прежде чем мы двинемся дальше, я хочу рассказать вам о небольшом предостережении,
+Прежде чем мы двинемся дальше, я хочу сказать вам о небольшом предостережении,
 если вы используете разделенные внутренние отступы. Если вы взгляните на разметку в
 Codepen, то вы увидите, что я добавил дополнительный `<div>` внутри `.grid-item`. 
 Этот дополнительный `<div>` важен, если ваш компонент содержит фон или границы.
@@ -518,177 +521,130 @@ Codepen, то вы увидите, что я добавил дополнител
 на внутренних границах</figcaption></figure>
 
 
+### Что бы я использовал? {#what-would-i-use-}
 
+Когда я начал кодить сетки два года назад, я в основном делал сетки, которые
+были спроектированы по [нисходящему подходу][28] и построены на 
+ [гибридной системе][29]. В таком подходе/системе, *я использовал процентные значения*
+ *и для ширины, и для отступов*
 
+В то время, я любил простоту настроек отступов с одной стороны колонки. Это было менее 
+напряжно для меня, потому что я довольно плох в математике. Дополнительные 
+`отступы +2` расчеты быстро вырубали меня.
 
-### What would I use? {#what-would-i-use-}
+Я благодарен, что я пошел этим путем. Хоть CSS и выглядит более сложным, чем
+для разделенных отступов, я был вынужден изучить [свойство nth-child][30]. Я также
+понял важность написания [mobile-first CSS][31]. Насколько я могу судить, 
+это до сих пор является главным препятствием и для молодых, и для опытных
+разработчиков.
 
-When I started to code grids about two years ago, I mostly coded grids that are
-designed with the[top-down approach][28] and built with a [hybrid system][29].
-In that approach/system,*I used percentages for both width and gutter values*
+Так или иначе, если вы попросите меня выбрать сейчас, **я выбиру разделенные отступы**
+заместно односторонних, потому что CSS для них более простой. Также, 
+**я рекомендую использовать внешние отступы** заместо внутренних, потому что 
+разметка получается чище. (Но *внутренние отступы легче расчитать*, поэтому я продолжу 
+статью с внутренними отступами).
 
-At that time, I loved the simplicity of setting gutters on one side of the grid
-. There was less cognitive overload for me because I’m pretty bad with math. The
-extra`gutters ÷ 2` calculation turned me off quickly.
+## Шаг 6: Создайте отладочную сетку {#step-6-create-a-debug-grid}
 
-I’m thankful I went that route. Although the CSS seems more complicated than
-split gutters, I was forced to learn[nth-child properly][30]. I also learned
-the importance of writing[mobile-first CSS][31], both which are still major
-impediments to both young and experienced developers, as far as I can tell.
+Когда вы только начинаете, особенно полезно иметь под рукой контрольную сетку,
+которая поможет вам отладить вашу разметку. Это помогает быть уверенным, что
+вы все делаете правильно.
 
-However, if you ask me to choose now, **I’ll go for split gutters** instead of
-single-sided ones, because the CSS is so much simpler. Also,**I prefer using
-margin for gutters** instead of padding because of the cleaner markup. (But *
-padding is easier to calculate*, so I’ll continue the rest of the article
-with padding
-).
+На данный момент, я знаю только кривой способ создать отладочную сетку. Нужно
+создать HTML-элементы и добавить к ним немного CSS. Вот так примерно выглядит HTML:
 
-## Step 6: Create a debug grid {#step-6-create-a-debug-grid}
-
-When you’re starting out, it’s especially helpful to have a control grid
-around to help you debug your layouts. It helps ensure you’re building things 
-correctly.
-
-At this point, I only know a lame way to create the debug grid. That is to
-create HTML elements, and add some CSS to it. Here’s what the HTML looks like:
-
-    <div <p class="hljs-class"></p>
-    <p class="hljs-keyword">class</p>=<p class="hljs-string">"fixed-gutter-grid"</p>>
-      <p class="xml"></p>
-    <p class="hljs-tag"><</p>
-    <p class="hljs-name">div</p> <p class="hljs-attr">class</p>=<p class="hljs-string">"column"</p>><p class="hljs-tag"></</p>
-    <p class="hljs-name">div</p>>
-      <div <p class="hljs-class"></p>
-    <p class="hljs-keyword">class</p>=<p class="hljs-string">"column"</p>><p class="xml"></p>
-    <p class="hljs-tag"></</p>
-    <p class="hljs-name">div</p>>
-      <div <p class="hljs-class"></p>
-    <p class="hljs-keyword">class</p>=<p class="hljs-string">"column"</p>><p class="xml"></p>
-    <p class="hljs-tag"></</p>
-    <p class="hljs-name">div</p>>
-      <div <p class="hljs-class"></p>
-    <p class="hljs-keyword">class</p>=<p class="hljs-string">"column"</p>><p class="xml"></p>
-    <p class="hljs-tag"></</p>
-    <p class="hljs-name">div</p>>
-      <div <p class="hljs-class"></p>
-    <p class="hljs-keyword">class</p>=<p class="hljs-string">"column"</p>><p class="xml"></p>
-    <p class="hljs-tag"></</p>
-    <p class="hljs-name">div</p>>
-      <div <p class="hljs-class"></p>
-    <p class="hljs-keyword">class</p>=<p class="hljs-string">"column"</p>><p class="xml"></p>
-    <p class="hljs-tag"></</p>
-    <p class="hljs-name">div</p>>
-      <div <p class="hljs-class"></p>
-    <p class="hljs-keyword">class</p>=<p class="hljs-string">"column"</p>><p class="xml"></p>
-    <p class="hljs-tag"></</p>
-    <p class="hljs-name">div</p>>
-      <div <p class="hljs-class"></p>
-    <p class="hljs-keyword">class</p>=<p class="hljs-string">"column"</p>><p class="xml"></p>
-    <p class="hljs-tag"></</p>
-    <p class="hljs-name">div</p>>
-      <div <p class="hljs-class"></p>
-    <p class="hljs-keyword">class</p>=<p class="hljs-string">"column"</p>><p class="xml"></p>
-    <p class="hljs-tag"></</p>
-    <p class="hljs-name">div</p>>
-      <div <p class="hljs-class"></p>
-    <p class="hljs-keyword">class</p>=<p class="hljs-string">"column"</p>><p class="xml"></p>
-    <p class="hljs-tag"></</p>
-    <p class="hljs-name">div</p>>
-      <div <p class="hljs-class"></p>
-    <p class="hljs-keyword">class</p>=<p class="hljs-string">"column"</p>><p class="xml"></p>
-    <p class="hljs-tag"></</p>
-    <p class="hljs-name">div</p>>
-      <div <p class="hljs-class"></p>
-    <p class="hljs-keyword">class</p>=<p class="hljs-string">"column"</p>><p class="xml"></p>
-    <p class="hljs-tag"></</p>
-    <p class="hljs-name">div</p>>
-    <<p class="hljs-regexp">/div></p>
+    <div class="fixed-gutter-grid">
+      <div class="column"></div>
+      <div class="column"></div>
+      <div class="column"></div>
+      <div class="column"></div>
+      <div class="column"></div>
+      <div class="column"></div>
+      <div class="column"></div>
+      <div class="column"></div>
+      <div class="column"></div>
+      <div class="column"></div>
+      <div class="column"></div>
+      <div class="column"></div>
+    </div>
     
 
-The CSS for this debug grid is the following (I’m using split gutters with
-margins to reduce markup for the debug grid
-):
+CSS для отладочной сетки будет следующий (я использую разделенные внешние отступы
+для упрощения разметки отладочной сетки):
 
-    <p class="hljs-selector-class">.column</p> {
-      <p class="hljs-attribute">width</p>: <p class="hljs-built_in">calc</p>((100% - 20px * 12) / );
-      <p class="hljs-attribute">height</p>: <p class="hljs-number">80px</p>;
-      <p class="hljs-attribute">margin-right</p>: <p class="hljs-number">10px</p>;
-      <p class="hljs-attribute">margin-left</p>: <p class="hljs-number">10px</p>;
-      <p class="hljs-attribute">background</p>: <p class="hljs-built_in">rgba</p>(0, 0, 255, 0.25);
-      <p class="hljs-attribute">float</p>: left;
+
+    .column {
+      width: calc((100% - 20px * 12) / 12);
+      height: 80px;
+      margin-right: 10px;
+      margin-left: 10px;
+      background: rgba(0, 0, 255, 0.25);
+      float: left;
     }
     
 
 See the Pen [Fixed gutter debug grid][32] by Zell Liew ([@zellwk][20]) on 
 [CodePen][21].
 
-(Ultra side note: Miriam and Robson are working on a 
-[SVG-background image debug grid on Susy v3][33]. This is super exciting cause
-you can use a simple function to create your debug grid!
-)
+(Ультра ремарка: Сьюзан Мириам (Suzanne Miriam) and Собрал Робсон (Sobral Robson) работают
+над [фоновым SVG изображением отладочной сетки для Susy v3][33]. Это мега захватывающе,
+потому что вы можете использовать простую функцию для создания вашей отладочной сетки!)
 
-## Step 7: Create layout variations {#step-7-create-layout-variations}
 
-The next step is to create your layout variations based on your content. This
-is where CSS grid systems shine. Instead of creating layouts by writing multiple
-grid classes, you can create a reasonable-sounding name for your layout.
+## Шаг 7: Внесите изменения в раскладку {#step-7-create-layout-variations}
 
-For instance, let’s say you have this grid layout that’s only used for
-guest articles. The layout looks like this on desktop:<figure>
+Следующий шаг заключается во внесении изменений в вашу раскладку на основе 
+вашего контента. Это то, где CSS-сетка сияет. Вместо того, что бы создавать 
+раскладку с написанием множества сеточных классов, вы можете создать для нее
+разумно-звучащее имя.
+ 
+Для примера, давайте предположим, что у вас есть сетки для раскладка, которая
+используется только для гостевых статей. Для десктопа раскладка выглядит 
+примерно так:<figure>
 
-![Example grid layout that's only used for guest articles][34]<figcaption>
-Example grid layout that’s only used for guest articles</figcaption></figure>
-The markup for this guest-article layout can be:
+![Пример сетки для раскладки, котоорая используется только для гостевых статей][34]<figcaption>
+Пример сетки для раскладки, котоорая используется только для гостевых статей</figcaption></figure>
 
-    <div <p class="hljs-class"></p>
-    <p class="hljs-keyword">class</p>=<p class="hljs-string">"l-guest-article"</p>>
-      <p class="xml"></p>
-    <p class="hljs-tag"><</p>
-    <p class="hljs-name">div</p> <p class="hljs-attr">class</p>=<p class="hljs-string">"l-guest"</p>> <p class="hljs-tag"></</p>
-    <p class="hljs-name">div</p>>
-      <div <p class="hljs-class"></p>
-    <p class="hljs-keyword">class</p>=<p class="hljs-string">"l-main"</p>><p class="xml"></p>
-    <p class="hljs-tag"></</p>
-    <p class="hljs-name">div</p>>
-      <div <p class="hljs-class"></p>
-    <p class="hljs-keyword">class</p>=<p class="hljs-string">"l-sidebar"</p>><p class="xml"></p>
-    <p class="hljs-tag"></</p>
-    <p class="hljs-name">div</p>>
-    <<p class="hljs-regexp">/div></p>
+Разметка для раскладки этой гостевой статьи может быть такой:
+
+    div class="l-guest-article">
+      <div class="l-guest"> <!-- Guest profile --></div>
+      <div class="l-main"><!-- main article--></div>
+      <div class="l-sidebar"><!-- sidebar widgets--></div>
+    </div>
     
 
-Alright sweet. So we have 12 columns now. The width of one column is 8.333% 
+Хорошо, дорогуша. Итак, сейчас у нас есть 12 колонок. Ширина одной колоник 8.333% 
 `(100 ÷ 12)`.
 
-The width of `.l-guest` is two columns. So, what you do is multiple 8.333% by
-two. Simple as that. Just rinse and repeat for the rest.
+Ширина `.l-guest` равна двум колонкам. Так что, что вам нужно сделать, так это умножить
+8.333% на два. Достаточно просто. Просто прополаскайте(??????) и повторите для остального.
 
-Here, I suggest using a preprocessor like Sass, which allows you to calculate
-column width easily with a`percentage` function instead of doing the
-calculations manually:
+Здесь я предлагаю использовать препроцессор типа Sass, который позволит вам расчитывать
+ширину колонок проще, использую функцию `percentage`, заместо ручных расчетов:
 
-    <p class="hljs-selector-class">.l-guest-article</p> {
-      @<p class="hljs-keyword">include</p> clearfix;
-      <p class="hljs-selector-class">.l-guest</p> {
-        
-        <p class="hljs-attribute">width</p>: percentage(/);
-        <p class="hljs-attribute">padding-left</p>: <p class="hljs-number">10px</p>;
-        <p class="hljs-attribute">padding-right</p>: <p class="hljs-number">10px</p>;
-        <p class="hljs-attribute">float</p>: left;
+    .l-guest-article {
+      @include clearfix;
+      .l-guest {
+        // Ahem. More readable than 16.666% :)
+        width: percentage(2/12);
+        padding-left: 10px;
+        padding-right: 10px;
+        float: left;
       }
     
-      <p class="hljs-selector-class">.l-main</p> {
-        <p class="hljs-attribute">width</p>: percentage(/);
-        <p class="hljs-attribute">padding-right</p>: <p class="hljs-number">10px</p>;
-        <p class="hljs-attribute">padding-left</p>: <p class="hljs-number">10px</p>;
-        <p class="hljs-attribute">float</p>: left;
+      .l-main {
+        width: percentage(7/12);
+        padding-right: 10px;
+        padding-left: 10px;
+        float: left;
       }
     
-      <p class="hljs-selector-class">.l-sidebar</p> {
-        <p class="hljs-attribute">width</p>: percentage(/);
-        <p class="hljs-attribute">padding-right</p>: <p class="hljs-number">10px</p>;
-        <p class="hljs-attribute">padding-left</p>: <p class="hljs-number">10px</p>;
-        <p class="hljs-attribute">float</p>: left;
+      .l-sidebar {
+        width: percentage(3/12);
+        padding-right: 10px;
+        padding-left: 10px;
+        float: left;
       }
     }
     
@@ -696,38 +652,43 @@ calculations manually:
 See the Pen [Content-sidebar-layout with fixed-gutter grid][35] by Zell Liew
 ([@zellwk][20]) on [CodePen][21].
 
-You probably find that there’s a lot of code repetition about now. We can
-make it nicer by abstracting the common parts away into a separate selector like
-`.grid-item`.
+Вы должно быть заметил, что сейчас часть кода повторяется. Мы можем сделать это
+лучше, вынеся общие части в отдельный селектор типа `.grid-item`.
 
-    <p class="hljs-selector-class">.grid-item</p> {
-      <p class="hljs-attribute">padding-left</p>: <p class="hljs-number">10px</p>;
-      <p class="hljs-attribute">padding-right</p>: <p class="hljs-number">10px</p>;
-      <p class="hljs-attribute">float</p>: left;
+    .grid-item {
+      padding-left: 10px;
+      padding-right: 10px;
+      float: left;
     }
     
-    <p class="hljs-selector-class">.l-guest-article</p> {
-      <p class="hljs-selector-class">.l-guest</p> { <p class="hljs-attribute">width</p>: percentage(/);}
-      <p class="hljs-selector-class">.l-main</p> { <p class="hljs-attribute">width</p>: percentage(/);}
-      <p class="hljs-selector-class">.l-sidebar</p> { <p class="hljs-attribute">width</p>: percentage(/); }
+    .l-guest-article {
+      .l-guest { width: percentage(2/12);}
+      .l-main { width: percentage(7/12);}
+      .l-sidebar { width: percentage(3/12); }
     }
     
 
-There. Much cleaner. :)
+Вот так. Гораздо чище. :)
 
-## Step 8: Make your layouts responsive {#step-8-make-your-layouts-responsive
+## Шаг 8: сделайте вашу раскладку адаптивной {#step-8-make-your-layouts-responsive
 }
 
-The final step is to make your layouts responsive. Let’s say our guest
-article layout responds in the following way:<figure>
+Последний шаг - это сделать вашу раскладку адаптивной.
+Давайте предположим, что раскладка нашей гостевой статьи ведет себя 
+следующим образом:<figure>
 
-![How guest the guest article layout respond to different viewports][36]<
-figcaption>How guest the guest article layout respond to different viewports</
-figcaption
-></figure>
-The markup of our guest article shouldn’t change. What we have is the most
-accessible layout we can possible have. So, the changes should entirely be in 
-CSS.
+![Как раскладка гостевой статьи ведет себя на различных вьюпортах][36]<figcaption>
+Как раскладка гостевой статьи ведет себя на различных вьюпортах</figcaption></figure>
+
+Разметка нашей гостевой статьи не должна меняться. То, что у нас есть - это 
+самая доступная раскладка, которая у нас может быть. Так что, изменения должны
+быть полностью в CSS.
+
+
+
+
+
+
 
 When writing the CSS for our responsive guest layout, I highly recommend you
 write[mobile first css][37] because it makes your code simpler and neater. We
@@ -901,7 +862,7 @@ Till then!</article>
 
  [28]: https://zellwk.com/blog/designing-grids/#how-big-should-columns-and-gutters-be-
 
- [29]: https://zellwk.com/blog/responsive-grid-system/how-the-grid-responds-to-different-viewports
+ [29]: https://zellwk.com/blog/designing-grids/#how-the-grid-responds-to-different-viewports
  [30]: https://css-tricks.com/examples/nth-child-tester/
  [31]: https://zellwk.com/blog/how-to-write-mobile-first-css/
  [32]: http://codepen.io/zellwk/pen/ALkyAA/
