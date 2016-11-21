@@ -685,153 +685,150 @@ See the Pen [Content-sidebar-layout with fixed-gutter grid][35] by Zell Liew
 самая доступная раскладка, которая у нас может быть. Так что, изменения должны
 быть полностью в CSS.
 
+При написании CSS для нашей отзывчивой гостевой раскладки, я настоятельно рекомендую
+вам писать [CSS сперва для мобильных][37], потому что это делает ваш код проще и 
+аккуратнее. В первую очередь, мы можем начать писать CSS для мобильной раскладки.
 
-
-
-
-
-
-When writing the CSS for our responsive guest layout, I highly recommend you
-write[mobile first css][37] because it makes your code simpler and neater. We
-can begin by writing CSS for the mobile layout first.
-
+Вот код:
 Here’s the code:
 
-    <p class="hljs-selector-class">.l-guest-article</p> {
-      <p class="hljs-selector-class">.l-guest</p> {  }
-      <p class="hljs-selector-class">.l-main</p> {
-        <p class="hljs-attribute">margin-top</p>: <p class="hljs-number">20px</p>;
+    .l-guest-article {
+      .l-guest { /* nothing goes here */ }
+      .l-main {
+        margin-top: 20px;
       }
-      <p class="hljs-selector-class">.l-sidebar</p> {
-        <p class="hljs-attribute">margin-top</p>: <p class="hljs-number">20px</p>;
-      }
-    }
-    
-
-There’s nothing we need to do since every component takes up the full width
-by default. However, we can add some margin-top to the last two items to 
-separate the elements from each other.
-
-Next, let’s move on to the tablet layout.
-
-For this layout, let’s say we activate the breakpoint is 700px. `.l-guest`
-should be 4 of 12 columns while`.l-main` and `.l-sidebar` should be 8 of 12
-columns each.
-
-Here, we need to remove the `margin-top` property from `.l-main` because it
-needs to be in line with`.l-guest`.
-
-Also, if we set `.l-sidebar` to a width of 8 columns, it will automatically
-float onto the second row because there’s not enough room on the first row. 
-Since it’s on the second row, we also need to add some left margins on
-`.l-sidebar` to push it into position; alternatively, we can float it to the
-right. (I’ll float right since there’s no need to calculate anything
-).
-
-Finally, since we’re floating the grid items, the grid container should
-include a clearfix to clear it’s own children.
-
-    <p class="hljs-selector-class">.l-guest-article</p> {
-      @<p class="hljs-keyword">include</p> clearfix;
-      <p class="hljs-selector-class">.l-guest</p> {
-        @<p class="hljs-keyword">media</p> (min-width: 700px) {
-          <p class="hljs-attribute">width</p>: percentage(/);
-          <p class="hljs-attribute">float</p>: left;
-        }
-      }
-      <p class="hljs-selector-class">.l-main</p> {
-        <p class="hljs-attribute">margin-top</p>: <p class="hljs-number">20px</p>;
-        @<p class="hljs-keyword">media</p> (min-width: 700px) {
-          <p class="hljs-attribute">width</p>: percentage(/);
-          <p class="hljs-attribute">margin-top</p>: ;
-          <p class="hljs-attribute">float</p>: left;
-        }
-      }
-      <p class="hljs-selector-class">.l-sidebar</p> {
-        <p class="hljs-attribute">margin-top</p>: <p class="hljs-number">20px</p>;
-        @<p class="hljs-keyword">media</p> (min-width: 700px) {
-          <p class="hljs-attribute">width</p>: percentage(/);
-          <p class="hljs-attribute">float</p>: right;
-        }
+      .l-sidebar {
+        margin-top: 20px;
       }
     }
     
+Нам здесь нечего делать, т.к. каждый компонент занимает всю доступную ширину по
+умолчанию. Однако, мы можем добавить верхний отступ к последним двум элементам,
+что бы отделить их друг от друга.
 
-Lastly, let’s move on to the desktop layout.
+Далее, давайте двигаться к планшетной раскладке. 
 
-For this layout, let’s say we activate the breakpoint is 1200px. `.l-guest`
-should be 2 of 12 columns,`.l-main` should be 7 of 12 columns and `.l-sidebar`
-should be 3 of 12 columns.
+Давайте предположим, что для этой раскладки мы установим контрольную точку в
+700px. `.l-guest` должен занимать 4 из 12 колонок, в то время как
+`.l-main` и `.l-sidebar` должны занимать по 8 колонок каждый.
 
-What we do is to create a new media query within each grid item and change the
-width as necessary. Take note we need to remove the margin-top property from
-`',l-sidebar` as well.
+Здесь нам надо удалть свойство `margin-top` у `.l-main`, потому что он должен 
+быть на одной линии с `.l-guest`.
 
-    <p class="hljs-selector-class">.l-guest-article</p> {
-      @<p class="hljs-keyword">include</p> clearfix;
-      <p class="hljs-selector-class">.l-guest</p> {
-        @<p class="hljs-keyword">media</p> (min-width: 700px) {
-          <p class="hljs-attribute">width</p>: percentage(/);
-          <p class="hljs-attribute">float</p>: left;
-        }
-    
-        @<p class="hljs-keyword">media</p> (min-width: 1200px) {
-          <p class="hljs-attribute">width</p>: percentage(/);
+Также, если мы выставляем `.l-sidebar` в ширину 8 колонок, то он автоматически
+перейдет во второй ряд, т.к. в первом ряду не достаточно места. Т.к. он находится
+во втором ряду, нам также надо добавить внешний отступ слева у `.l-sidebar`, что бы
+протолкнуть его на позицию; в качестве альтернативы, мы можем сделать его 
+обтекаемым справа. (я добавлю обтекание справа, т.к. нет необходимости что-либо
+высчитывать).
+
+Наконец, т. к. мы сделали нашу сетку обтекаемой, контейнер сетки должен включать
+в себя clearfix, что бы очистить обтекание у дочерних элементов.
+
+    .l-guest-article {
+      @include clearfix;
+      .l-guest {
+        @media (min-width: 700px) {
+          width: percentage(4/12);
+          float: left;
         }
       }
-      <p class="hljs-selector-class">.l-main</p> {
-        <p class="hljs-attribute">margin-top</p>: <p class="hljs-number">20px</p>;
-        @<p class="hljs-keyword">media</p> (min-width: 700px) {
-          <p class="hljs-attribute">width</p>: percentage(/);
-          <p class="hljs-attribute">margin-top</p>: ;
-          <p class="hljs-attribute">float</p>: left;
-        }
-        @<p class="hljs-keyword">media</p> (min-width: 1200px) {
-          <p class="hljs-attribute">width</p>: percentage(/);
+      .l-main {
+        margin-top: 20px;
+        @media (min-width: 700px) {
+          width: percentage(8/12);
+          margin-top: 0;
+          float: left;
         }
       }
-      <p class="hljs-selector-class">.l-sidebar</p> {
-        <p class="hljs-attribute">margin-top</p>: <p class="hljs-number">20px</p>;
-        @<p class="hljs-keyword">media</p> (min-width: 700px) {
-          <p class="hljs-attribute">width</p>: percentage(/);
-          <p class="hljs-attribute">float</p>: right;
-        }
-        @<p class="hljs-keyword">media</p> (min-width: 1200px) {
-          <p class="hljs-attribute">width</p>: percentage(/);
-          <p class="hljs-attribute">margin-top</p>: ;
+      .l-sidebar {
+        margin-top: 20px;
+        @media (min-width: 700px) {
+          width: percentage(8/12);
+          float: right;
         }
       }
     }
     
 
-Here’s the codepen for the final layout we’ve created:
+И наконец, давайте перейдем к настольной раскладке. 
+
+Давайте предположим, что для этой раскладки вы установим контрольную точку
+в 1200px. `.l-guest` должен занимать 2 из 12 колонок,`.l-main` должен
+занимать 7 из 12 колонок, и `.l-sidebar` должен занимать 3 из 12 колонок.
+
+Что мы делаем, так это создаем новый медиа запрос в рамках каждого элемента
+сетки и изменяем ширину по необходимости. Обратите внимание, что мы 
+также должны удалить верхний отступ у `.l-sidebar`
+
+
+    .l-guest-article {
+      @include clearfix;
+      .l-guest {
+        @media (min-width: 700px) {
+          width: percentage(4/12);
+          float: left;
+        }
+    
+        @media (min-width: 1200px) {
+          width: percentage(2/12);
+        }
+      }
+      .l-main {
+        margin-top: 20px;
+        @media (min-width: 700px) {
+          width: percentage(8/12);
+          margin-top: 0;
+          float: left;
+        }
+        @media (min-width: 1200px) {
+          width: percentage(7/12);
+        }
+      }
+      .l-sidebar {
+        margin-top: 20px;
+        @media (min-width: 700px) {
+          width: percentage(8/12);
+          float: right;
+        }
+        @media (min-width: 1200px) {
+          width: percentage(3/12);
+          margin-top: 0;
+        }
+      }
+    }
+    
+
+Вот codepen с финальной раскладкой, которую мы создани:
 
 See the Pen [guest-article layout with fixed-gutter grid (final)][38] by Zell
 Liew
 ([@zellwk][20]) on [CodePen][21].
 
-(Oh, by the way, you can achieve these results with Susy too. Just remember to
-set the[gutter-position][39] to `inside-static`)
+(О, кстати, вы также можете добавиться таких результатов со Susy.
+Только не забудте выставить [gutter-position][39] в `inside-static`).
 
-## Wrapping up {#wrapping-up}
+## В завершении {#wrapping-up}
 
-Wow. This is a long article. I think I died three times writing it. (Thanks for
-reading it all the way. I hope you didn’t die three times reading it though!
-😛).
+Ух. Это длинная статья. Я думал, что трижды умру, пока пишу ее. (Спасибо,
+что дочитали до сюда. Я надеюсь, вы не умерли трижды, пока читали ее! 😛).
 
+Как вы видете в этой статье, шаги для создания отзывчивой сетки относительно
+просты. 
 As you can see in this article, the steps to creating a responsive grid system
-are relatively straightforward. The parts that most people get mixed up are 
-steps 5 (determining gutter position) and 8 (making layouts responsive
-).
+are relatively straightforward. Части, которые большинство людей путают, 
+являются шаги 5 (определите положени отступов) и 8 (сделайте вашу раскладку
+адаптивной).
 
-Step 5 is simple when you think through all the possible methods, and we’ve
-thought them through together. Step 8, on the other hand, is solvable easily 
-once you have enough practice with writing[mobile first css][37]
+Шаг 5 прост, когда вы знаете все возможно методы, и мы разбрали их вместе.
+Шаг 8, с другой стороны, легко разрешим, когда у вас есть достаточно опыта
+в написании [CSS сперва для мобильных][37].
 
-I hope this article has given you the knowledge to build your own responsive
-grid system, and I hope to see you build a custom grid for your next project.
+Я надеюсь эта статья дала вам знания для построения вашей собственной 
+отзывчивой сетки, и я надеюсь увидеть вашу специально созданную для проекта
+сетку.
 
-Till then!</article>
+До скорого!</article>
 
  [1]: https://zellwk.com/blog/designing-grids
  [2]: https://zellwk.com/blog/designing-grids/
